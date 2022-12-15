@@ -25,17 +25,17 @@ class Batch(models.Model):
 allBatch = list(set(Batch.objects.values_list('batch', flat=True)))
 tupBatch = sorted([(item, item) for item in allBatch])
 
-class BookedBatch(models.Model):
-    created = models.DateTimeField(auto_now_add=True)
-    phone = models.ForeignKey(Register, on_delete=models.CASCADE, blank=True, null=True)
-    slot = models.CharField(choices=tupBatch, blank=True, null=True, max_length=10)
-    datePaid = models.DateField()
-    class Meta:
-        ordering = ['created']
-
-
 qsPhone = list(set(Register.objects.values_list('phone', flat=True)))
 tuPhone = sorted([(item, item) for item in qsPhone])
+
+class BookedBatch(models.Model):
+    created = models.DateTimeField(auto_now_add=True)
+    phone = models.CharField(choices=tuPhone, blank=True, null=True, max_length=10)
+    slot = models.CharField(choices=tupBatch, blank=True,
+                            null=True, max_length=10)
+    slotBooked = models.DateField()
+    class Meta:
+        ordering = ['created']
 
 class Payment(models.Model):
     created = models.DateTimeField(auto_now_add=True)

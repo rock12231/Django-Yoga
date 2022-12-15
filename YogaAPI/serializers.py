@@ -39,7 +39,7 @@ class BookedBatchSerializer(serializers.Serializer):
     created = serializers.DateTimeField(required=False)
     phone = serializers.CharField(required=False, allow_blank=True, max_length=10)
     slot = serializers.CharField(required=False, allow_blank=True, max_length=100)
-    datePaid = serializers.CharField(required=False, allow_blank=True, max_length=100)
+    slotBooked = serializers.CharField(required=False, allow_blank=True, max_length=100)
     
     def create(self, validated_data):
         return BookedBatch.objects.create(**validated_data)

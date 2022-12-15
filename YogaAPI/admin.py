@@ -13,7 +13,7 @@ admin.site.register(Batch, BatchTable)
 
 
 class BookBatchTable(admin.ModelAdmin):
-    list_display = ('phone','id', 'created', 'slot', 'datePaid')
+    list_display = ('phone', 'id', 'created', 'slot', 'slotBooked')
 admin.site.register(BookedBatch, BookBatchTable)
 
 

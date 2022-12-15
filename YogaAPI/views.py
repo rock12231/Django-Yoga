@@ -10,9 +10,15 @@ from rest_framework import status
 class RegisterUser(APIView):
 
     def get(self, request, format=None):
-        qsRegister = Register.objects.all()
-        serializer = RegisterSerializer(qsRegister, many=True)
-        return Response(serializer.data)
+        if self.request.query_params.get('phone'):
+            qsRegister1 = BookedBatch.objects.filter(phone=self.request.query_params.get('phone'))
+            qsRegister2 = Payment.objects.filter(phone=self.request.query_params.get('phone'))
+            serializer1 = BookedBatchSerializer(qsRegister1, many=True)
+            serializer2 = PaymentSerializer(qsRegister2, many=True)
+            print(serializer1.data,"boooookkk")
+            print(serializer2.data,"payyyyyyy")
+            data={'BookedBatch':serializer1.data,'Payment':serializer2.data}
+            return Response(data)
     
     def post(self, request, format=None):
         serializer = RegisterSerializer(data=request.data)
@@ -26,11 +32,12 @@ class RegisteredUser(APIView):
     
     def get_object(self, pk):
         try:
-            return Register.objects.get(phone=pk)
+            return Register.objects.get(pk=pk)
         except Register.DoesNotExist:
             raise Http404
         
     def get(self, request, pk, format=None):
+        # phone = request.qaryparams.get('ph/one')
         qsRegister = self.get_object(pk)
         serializer = RegisterSerializer(qsRegister)
         return Response(serializer.data)
