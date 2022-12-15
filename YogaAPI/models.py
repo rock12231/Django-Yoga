@@ -36,7 +36,7 @@ class BookedBatch(models.Model):
 
 class Payment(models.Model):
     created = models.DateTimeField(auto_now_add=True)
-    phone = models.ForeignKey(Register, on_delete=models.CASCADE, blank=True, null=True)
+    phone = models.ForeignKey( Register, on_delete=models.CASCADE, related_name='Payment')
     paymentId = models.CharField(max_length=20, blank=True, default='')
     datePaid = models.DateField()
     amount = models.IntegerField(blank=True, default='000')
