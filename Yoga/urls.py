@@ -17,7 +17,10 @@ from django.contrib import admin
 from django.urls import path, include
 
 
+# router.register('user', RegisterUser.as_view(), basename='user')
+# router.register('payment', views.PaymentList.as_view(), basename='payment')
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('YogaAPI.urls')),
+    path('api/', include('YogaAPI.urls')),
 ]

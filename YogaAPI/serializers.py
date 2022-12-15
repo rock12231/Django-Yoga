@@ -9,6 +9,11 @@ class RegisterSerializer(serializers.Serializer):
     phone = serializers.CharField(required=False, allow_blank=True, max_length=10)
     address = serializers.CharField(required=False, allow_blank=True, max_length=100)
     
+# class RegisterSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Register
+#         fields = "__all__"
+        
     # def validate_phone(self, value):
     #     if len(value) != 10:
     #         raise serializers.ValidationError("Phone number should be 10 digits")
@@ -39,6 +44,7 @@ class BookedBatchSerializer(serializers.Serializer):
     def create(self, validated_data):
         return BookedBatch.objects.create(**validated_data)
     
+
 class PaymentSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
     created = serializers.DateTimeField(required=False)
@@ -47,6 +53,12 @@ class PaymentSerializer(serializers.Serializer):
     datePaid = serializers.CharField(required=False, allow_blank=True, max_length=100)
     amount = serializers.CharField(required=False, allow_blank=True, max_length=100)
     
+    # def validate(self, validated_data):
+    #     if Register.objects.filter(phone=validated_data['phone']).exists():
+    #         return validated_data
+    #     raise serializers.ValidationError(
+    #             {'error': "Phone number NOT exists"})
+        
     def create(self, validated_data):
         if Register.objects.filter(phone=validated_data['phone']).exists():
             return Payment.objects.create(**validated_data)

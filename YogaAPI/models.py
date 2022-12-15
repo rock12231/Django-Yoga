@@ -34,9 +34,12 @@ class BookedBatch(models.Model):
         ordering = ['created']
 
 
+qsPhone = list(set(Register.objects.values_list('phone', flat=True)))
+tuPhone = sorted([(item, item) for item in qsPhone])
+
 class Payment(models.Model):
     created = models.DateTimeField(auto_now_add=True)
-    phone = models.ForeignKey( Register, on_delete=models.CASCADE, related_name='Payment')
+    phone = models.CharField(choices=tuPhone, blank=True, null=True, max_length=10)
     paymentId = models.CharField(max_length=20, blank=True, default='')
     datePaid = models.DateField()
     amount = models.IntegerField(blank=True, default='000')
